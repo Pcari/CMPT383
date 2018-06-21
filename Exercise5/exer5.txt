@@ -1,0 +1,25 @@
+Fibonacci Speed
+
+My naive recursive algorithm of Fibonacci sequence has time complexity of O(fib n).
+Because Haskell is lazy my function will create huge nested thunk. Then it does the calculation separately and doing redundant calculations. My function does not use memoization to save time.
+
+
+
+the values in the things list is Fibonacci sequence
+
+In Things, since there are no arguments, Haskell will store any list elements that have been calculated. 
+
+
+The function:
+things 0 : 1 : zipWith... 
+
+
+Basically means that things = 0 : 1 : and thunk of what needs to be calculated. 
+Tail things is 1 : and thunk and the zipWith (+) is the thunk that needs to be calculated. This gives:
+things 								= 0 : 1 : thunk
+tail things							= 1 : thunk
+zipWith (+) things (tail things) 	= thunk 
+
+Haskell will not calculate thunk unless they are needed. If we ask for 2 things, it will return [0,1] right away. If we ask for 3, then Haskell will need to evaluate the thunk. 
+
+things is so much faster because Haskell is evaluating just enough values to calculate things and leaves rest as a thunk in case it is needed again. previously calculated values does not have to be calculated again so it is much faster than fibs.
